@@ -18,12 +18,6 @@ sealed trait Config {
   /** Should a main method be injected? */
   def injectMain: Boolean
 
-  /** Check IR for well-formedness. */
-  def check: Boolean
-
-  /** Log extra debugging information. */
-  def verbose: Boolean
-
   /** Create new config with given entry point. */
   def withEntry(value: Global): Config
 
@@ -35,12 +29,6 @@ sealed trait Config {
 
   /** Create a new config with given inject main flag. */
   def withInjectMain(value: Boolean): Config
-
-  /** Create a new config with given check flag. */
-  def withCheck(value: Boolean): Config
-
-  /** Create a new config with given verbose flag. */
-  def withVerbose(value: Boolean): Config
 }
 
 object Config {
@@ -50,16 +38,12 @@ object Config {
     Impl(entry = Global.None,
          paths = Seq.empty,
          targetDirectory = VirtualDirectory.empty,
-         injectMain = true,
-         check = false,
-         verbose = false)
+         injectMain = true)
 
   private final case class Impl(entry: Global,
                                 paths: Seq[Path],
                                 targetDirectory: VirtualDirectory,
-                                injectMain: Boolean,
-                                check: Boolean,
-                                verbose: Boolean)
+                                injectMain: Boolean)
       extends Config {
     def withEntry(value: Global): Config =
       copy(entry = value)
@@ -72,11 +56,5 @@ object Config {
 
     def withInjectMain(value: Boolean): Config =
       copy(injectMain = value)
-
-    def withCheck(value: Boolean): Config =
-      copy(check = value)
-
-    def withVerbose(value: Boolean): Config =
-      copy(verbose = value)
   }
 }

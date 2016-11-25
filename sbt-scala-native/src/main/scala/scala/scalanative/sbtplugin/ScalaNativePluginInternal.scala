@@ -160,8 +160,6 @@ object ScalaNativePluginInternal {
     addCompilerPlugin(
       "org.scala-native" % "nscplugin" % nativeVersion cross CrossVersion.full),
     resolvers += Resolver.sonatypeRepo("snapshots"),
-    nativeVerbose := false,
-    nativeEmitDependencyGraphPath := None,
     nativeLibraryLinkage := Map(),
     nativeSharedLibrary := false,
     nativeClang := {
@@ -194,7 +192,6 @@ object ScalaNativePluginInternal {
       val clang         = nativeClang.value
       val clangpp       = nativeClangPP.value
       val clangOpts     = nativeClangOptions.value
-      val dotpath       = nativeEmitDependencyGraphPath.value
       val linkage       = nativeLibraryLinkage.value
       val sharedLibrary = nativeSharedLibrary.value
       val logger        = streams.value.log
@@ -204,8 +201,6 @@ object ScalaNativePluginInternal {
         .withPaths(classpath.map(p => tools.Path(VirtualDirectory.real(p))))
         .withTargetDirectory(VirtualDirectory.real(target))
         .withInjectMain(!nativeSharedLibrary.value)
-        .withCheck(false)
-        .withVerbose(nativeVerbose.value)
 
       checkThatClangIsRecentEnough(clang)
 

@@ -112,7 +112,6 @@ lazy val libSettings =
 lazy val projectSettings =
   ScalaNativePlugin.projectSettings ++ Seq(
     scalaVersion := libScalaVersion,
-    nativeVerbose := true,
     nativeClangOptions ++= Seq("-O0"),
     resolvers := Nil
   )
